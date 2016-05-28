@@ -42,5 +42,29 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script>
+    $(function(){
+      $(".form-signin").on("submit",function(e){
+        e.preventDefault();
+        $.ajax({
+          type: 'POST',
+          url: $(this).attr("action"),
+          data: $(this).serialize(),
+          success: function(data){
+            if(data.status==true){
+              alert("成功登陆");
+            }
+            else{
+              alert(data.err);
+            }
+
+          },
+          dataType: 'json'
+        });
+        
+      })
+    })
+    </script>
   </body>
 </html>
