@@ -1,9 +1,6 @@
 <?php
 session_start();
-
 include_once($_SERVER['DOCUMENT_ROOT']."/inc/config.php") ;
-
-
 
 // $code = $_SESSION['code'];
 // $checkcode = $_POST['checkcode'];
@@ -29,7 +26,7 @@ else{
     //echo $query;
 	$result=mysql_query($query);  
 	$test=mysql_fetch_assoc($result);
-	print_r($test['id']) ;
+	//print_r($test['id']) ;
 
 	if(!isset($test['id'])){
 		$status = false;

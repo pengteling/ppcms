@@ -1,7 +1,12 @@
 <?php
+session_start();
+
 if(!isset($_SESSION['user_id'])){
-    if(isset($_POST['submit'])){//用户提交登录表单时执行如下代码
-    	}
-    }
+	echo "请重新登陆！";
+}
+else{
+	echo  $_SESSION['user_id'];
+
+}
     
 ?>
