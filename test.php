@@ -9,4 +9,4 @@ include_once($_SERVER['DOCUMENT_ROOT']."/inc/conn.php") ;
 // print_r($test) ;
 
 
-var_dump(PDO::getAvailableDrivers());
+//var_dump(PDO::getAvailableDrivers()); //支持的PDO
