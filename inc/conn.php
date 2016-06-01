@@ -18,9 +18,9 @@ $dsn = 'sqlsrv:Server=JADEBOXSERVER\SQLEXPRESS;database=xannad';
 $user = 'xannad';
 $password = 'xannadadm';
 
-// $dsn = 'mysql:dbname=xannad;host=127.0.0.1';  //两种都可以？ 
-// $user = 'root';
-// $password = 'root';
+$dsn = 'mysql:dbname=xannad;host=127.0.0.1';  //两种都可以？ 
+$user = 'root';
+$password = 'root';
 
 try{
 	//$dbh = new PDO($dsn,$user,$password, array(PDO::ATTR_PERSISTENT => true));
@@ -31,7 +31,7 @@ try{
 	$dbh -> setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_ASSOC);//关联数组
 	//$dbh -> setAttribute(3,2);
 
-	//$dbh -> setAttribute(PDO::ATTR_AUTOCOMMIT,0); //mssql 不需要此名 否则有The auto-commit mode cannot be changed for this driver
+	$dbh -> setAttribute(PDO::ATTR_AUTOCOMMIT,0); //mssql 不需要此名 否则有The auto-commit mode cannot be changed for this driver
 }catch(PDOException $e){
 	echo '数据库连接失败：'.$e->getMessage();
 }
@@ -120,7 +120,12 @@ try{
 //$cateid = "erer";
 
 	//$cate = $pdo_pre -> fetch(PDO::FETCH_ASSOC);//一条
-	//$cate = $pdo_pre -> fetchAll(PDO::FETCH_ASSOC);//多条
+	$cate = $pdo_pre -> fetchAll(PDO::FETCH_ASSOC);//多条
+	foreach ($cate as $v) {
+		# code...
+		echo $v['catename']."<br>";
+		//echo $catename;		
+	}
 
 	while($pdo_pre -> fetch(PDO::FETCH_NUM)){
 		echo $cateid;
@@ -133,8 +138,8 @@ try{
 	//var_dump($pdo_pre -> rowCount());
 }catch(PDOException $e){
 	echo '数据库查询失败：'.$e->getMessage();
-}
-*/
+}*/
+
 
 
 /*mysql事务处理*/
@@ -185,46 +190,54 @@ try{
 
 //mssql 
 
-try{
-	$dbh -> beginTransaction();
-	$sql = "INSERT INTO keys(title) values(:title)"; //?别名方式  更方便:username,:pwd,:sex
-	$pdo_pre = $dbh -> prepare($sql);
-	var_dump($pdo_pre);
-	$pdo_pre -> bindParam("title",$title); //这里必须是变量  不能直接写值
-	//$pdo_pre -> bindParam(2,$username);
-	$title = "testtest";
-	$return = $pdo_pre -> execute();
+// try{
+// 	$dbh -> beginTransaction();
+// 	$sql = "INSERT INTO keys(title) values(:title)"; //?别名方式  更方便:username,:pwd,:sex
+// 	$pdo_pre = $dbh -> prepare($sql);
+// 	var_dump($pdo_pre);
+// 	$pdo_pre -> bindParam("title",$title); //这里必须是变量  不能直接写值
+// 	//$pdo_pre -> bindParam(2,$username);
+// 	$title = "testtest";
+// 	$return = $pdo_pre -> execute();
 	
-	var_dump($return);
+// 	var_dump($return);
 
-	//$pdo_pre -> execute(array('testtest222'));
-	$arr = array("00"=>"testtest2223");
-	$pdo_pre -> execute($arr);
+// 	//$pdo_pre -> execute(array('testtest222'));
+// 	$arr = array("00"=>"testtest2223");
+// 	$pdo_pre -> execute($arr);
 
-	/*$sql = "INSERT INTO keys(title) values('test123')";
-	$affected = $dbh -> exec($sql);
-	 //var_dump($affected);
+// 	$sql = "INSERT INTO keys(title) values('test123')";
+// 	$affected = $dbh -> exec($sql);
+// 	 //var_dump($affected);
 
-	if(!$affected){
-	 	throw new PDOException("update fail");	 	
-	 }
-	 else{
+// 	if(!$affected){
+// 	 	throw new PDOException("update fail");	 	
+// 	 }
+// 	 else{
 	 	
-	 }
+// 	 }
 
-	$sql = "update  keys set title='test12344' where id=111";
-	 $affected = $dbh -> exec($sql);
-	 //var_dump($affected);
-	 if(!$affected){
-	 	throw new PDOException("update fail");	 	
-	 }
-	 else{
+// 	$sql = "update  keys set title='test12344' where id=111";
+// 	 $affected = $dbh -> exec($sql);
+// 	 //var_dump($affected);
+// 	 if(!$affected){
+// 	 	throw new PDOException("update fail");	 	
+// 	 }
+// 	 else{
 	 	
-	 }*/
+// 	 }
 
-	$dbh -> commit();
+// 	$dbh -> commit();
 
-}catch(PDOException $e){
-	$dbh->rollBack();
-	echo '数据库查询失败：'.$e->getMessage();
-}
+// }catch(PDOException $e){
+// 	$dbh->rollBack();
+// 	echo '数据库查询失败：'.$e->getMessage();
+// }
+
+//$dbh = null;  //清空对象
+
+// $sql = "select * from category";
+// foreach ($dbh->query($sql) as $val ) {
+// 	# code...
+// 	echo $val['cateid']."-----".$val["catename"];
+// }

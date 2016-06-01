@@ -10,3 +10,5 @@ include_once($_SERVER['DOCUMENT_ROOT']."/inc/conn.php") ;
 
 
 //var_dump(PDO::getAvailableDrivers()); //支持的PDO
+
+echo(md5("pengteling",false));

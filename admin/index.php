@@ -6,7 +6,5 @@ if(!isset($_SESSION['user_id'])){
 }
 else{
 	echo  $_SESSION['user_id'];
-
-}
-    
+}    
 ?>
