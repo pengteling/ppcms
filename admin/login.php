@@ -53,8 +53,8 @@
           data: $(".form-signin").serialize(),
           success: function(data){
             if(data.status==true){
-              alert("成功登陆");
-              window.location.href='index.php';
+              //alert("成功登陆");
+              window.location.href='/admin/index/index.php';
             }
             else{
               alert(data.err);        
