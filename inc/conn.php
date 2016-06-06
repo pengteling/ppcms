@@ -25,6 +25,9 @@ $password = 'root';
 try{
 	//$dbh = new PDO($dsn,$user,$password, array(PDO::ATTR_PERSISTENT => true));
 	$dbh = new PDO($dsn,$user,$password); //mssql 不能使用 array(PDO::ATTR_PERSISTENT => true) 否则apache不断重启
+	$dbh = new PDO($dsn,$user,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "set names utf8")); //mssql 不能使用 array(PDO::ATTR_PERSISTENT => true) 否则apache不断重启
+
+	//$dbh -> query('set names utf8');
 	//错误处理模式
 	$dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
@@ -32,6 +35,7 @@ try{
 	//$dbh -> setAttribute(3,2);
 
 	$dbh -> setAttribute(PDO::ATTR_AUTOCOMMIT,0); //mssql 不需要此名 否则有The auto-commit mode cannot be changed for this driver
+	
 }catch(PDOException $e){
 	echo '数据库连接失败：'.$e->getMessage();
 }

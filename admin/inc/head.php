@@ -80,7 +80,7 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-            
+ <?php if($userid==41):?>           
  <li>
     <a href="#"><i class="fa fa-list fa-fw"></i> 网站页面<span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">   
@@ -90,119 +90,28 @@
       </ul>
       </li>   
          
+<?php endif; ?>
 
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 网站架构<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/category/companyadd.asp">添加栏目</a></li>
-
-<li> <a href="/admin/category/companyall.asp">栏目管理</a></li>
-
-    </ul>
+<?php 
+$sql ="Select * from catepage where depth=1 and ishome=1  order by orderid";
+foreach ($dbh->query($sql) as $rs ):?>
+	<li>
+    <a href="#"><i class="fa fa-list fa-fw"></i> <?php echo $rs['catename']?><span class="fa arrow"></span></a>
+		    <ul class="nav nav-second-level">                                
+		    	<?php 
+		    	$cateid_d1 = $rs['cateid'];
+		    	//$sql2 ="Select * from catepage where followid=".$cateid_d1." and depth=2 and ishome=1   order by orderid";
+		    	$sql2 ="Select * from catepage where followid={$cateid_d1} and depth=2 and ishome=1  order by orderid";		    	
+				foreach ($dbh->query($sql2) as $rs2 ):?>
+				<li> <a href="<?php echo $rs2['OutLinkUrl']?>"><?php echo $rs2['catename']; ?></a></li>
+				<?php endforeach;?>			
+				
+		    </ul>
                             <!-- /.nav-second-level -->
 </li>
 
+<?php endforeach;?>
 
-   
-
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 信息管理<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/news/news_add.asp">添加信息</a></li>
-
-<li> <a href="/admin/News/CompanyAll.asp">信息管理</a></li>
-
-<li> <a href="/admin/news/news_manage.asp">所有信息</a></li>
-
-<li> <a href="/admin/news/news_manage_recycle.asp">回收站</a></li>
-
-<li> <a href="/admin/news/file_manage.asp">附件清理</a></li>
-
-    </ul>
-                            <!-- /.nav-second-level -->
-</li>
-
-
-   
-
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 项目管理<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/news2/news_manage.asp">项目管理</a></li>
-
-<li> <a href="/admin/news2/news_add.asp">添加项目</a></li>
-
-    </ul>
-                            <!-- /.nav-second-level -->
-</li>
-
-
-   
-
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 广告系统<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/ad/ad_sort.asp">广告分类</a></li>
-
-<li> <a href="/admin/ad/ad_add.asp">发布广告</a></li>
-
-<li> <a href="/admin/ad/ad_manage.asp">广告管理</a></li>
-
-    </ul>
-                            <!-- /.nav-second-level -->
-</li>
-
-
-   
-
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 管理员管理<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/manager/Manage_Admin.asp">管理员管理</a></li>
-
-<li> <a href="/admin/manager/ad_sort.asp">管理员分组</a></li>
-
-    </ul>
-                            <!-- /.nav-second-level -->
-</li>
-
-
-   
-
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 系统管理<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/databak/admin_sqldb_bak.asp">sqlserver备分</a></li>
-
-    </ul>
-                            <!-- /.nav-second-level -->
-</li>
-
-
-   
-
-<li>
-    <a href="#"><i class="fa fa-list fa-fw"></i> 系统配置<span class="fa arrow"></span></a>
-    <ul class="nav nav-second-level">                                
-    
-<li> <a href="/admin/config/admin_main.asp">查看</a></li>
-
-<li> <a href="/admin/config/SiteConfig.asp">网站配置</a></li>
-
-    </ul>
-                            <!-- /.nav-second-level -->
-</li>
-
-
-  
-
-                       
                         
                     </ul>
                 </div>
@@ -216,7 +125,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">操作管理</h1>
+                        <h1 class="page-header"><?php echo $curpagetitle;?></h1>
                     </div>
                     <!-- /.col-lg-12 -->
 </div>
