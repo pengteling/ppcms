@@ -1,1 +1,31 @@
-admin.css
+a.navbar-brand{
+	font-family: 'Microsoft YaHei','微软雅黑';
+	font-size: 18px;
+	font-weight: bolder;
+
+}
+table.table_southidc tr td{
+	padding: 3px 0;
+	border-bottom: #ddd 1px dashed;
+
+}
+table.table_southidc tr td.blod{
+	font-weight: bolder;
+	font-weight: 16px;
+
+}
+.td_southidc1{BACKGROUND-COLOR: #eee;}
+.td_southidc4{BACKGROUND-COLOR: #ffffff;}
+.td_southidc5{BACKGROUND-COLOR: #ffffff;}
+.td_southidc3{BACKGROUND-COLOR: #ffffff;}
+.td_southidc2{BACKGROUND-COLOR: #ffffff;}
+.td_southidc6{BACKGROUND-COLOR: #ffffff;}
+.td_southidc7{BACKGROUND-COLOR: #ffffff;}
+td b{color:#000000;}
+#productimages li{
+	list-style:none;
+	float: left;
+	a{
+		display: block;
+	}
+}
