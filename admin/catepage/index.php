@@ -176,12 +176,12 @@ foreach($data2 as $key => $value){
               
             </div>
             <div class="form-group">
-              <label for="title" class="control-label">客户名称：</label>
-              <input type="text" name="sitecompany" id="sitecompany_add" class="form-control" value="" placeholder="请输入..." />
+              <label for="title" class="control-label">栏目名称：</label>
+              <input type="text" name="catename" id="catename_add" class="form-control" value="" required placeholder="请输入..." />
             </div>
             <div class="form-group">
-              <label for="title" class="control-label">联系人：</label>
-              <input type="text" name="lxperson" id="lxperson_add" class="form-control" value="" placeholder="请输入..." />
+              <label for="title" class="control-label">栏目类型：</label>
+              <input type="radio" name="catetype" value="1">栏目 <input type="radio" name="catetype" value="3">链接
             </div>
             <div class="form-group">
               <label for="title" class="control-label">联系电话：</label>
