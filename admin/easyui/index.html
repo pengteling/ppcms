@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title> jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/icon.css">
+	
+	<script type="text/javascript" src="/js/easyUI/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/locale/easyui-lang-zh_CN.js"></script>
+
+	<!-- 配置文件 -->
+    <script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/js/ueditor/ueditor.all.js"></script>
+
+</head>
+<body>
+	<!-- 纯html调用 -->
+	<table id="dg" title="My Users" class="easyui-datagrid" style="width:550px;height:250px"
+		url="api/get_users.php"
+		toolbar="#toolbar"
+		rownumbers="true" fitColumns="true" singleSelect="true">
+	<thead>
+		<tr>
+			<th field="ID" width="50">ID</th>
+			<th field="UserName" width="50">UserName</th>
+			<th field="Password" width="50">Password</th>
+		</tr>
+	</thead>
+</table>
+<div id="toolbar">
+	<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">增加</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除</a>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="padding:10px 20px"
+		closed="true" buttons="#dlg-buttons" data-options="fit:true,border:false">
+	<div class="ftitle">User Information</div>
+	<form id="fm" method="post">
+		<div class="fitem">
+			<label>ID:</label>
+			<input name="ID" class="easyui-validatebox" required="true">
+		</div>
+		
+		<div class="fitem" >
+			<!-- 加载编辑器的容器 -->
+			<textarea  id="uname" name="UserName" cols="30" rows="10" style="display: none"></textarea>
+		    <script id="container" type="text/plain">
+		        
+		    </script>
+		</div>
+
+
+		<div class="fitem" >
+			<!-- 加载编辑器的容器 -->
+			<textarea  id="pword" name="Password" cols="30" rows="10" style="display: none"></textarea>
+		    <script id="container2" type="text/plain">
+		        
+		    </script>
+		</div>
+		
+	</form>
+</div>
+<div id="dlg-buttons">
+	<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">保存</a>
+	<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
+
+	<Script>
+function newUser(){
+
+        var ue = UE.getEditor('container',{
+        	autoHeightEnabled:true
+        });
+        ue.ready(function() {
+			ue.setContent(""); //清空值 缓存
+		});
+
+		var ue2 = UE.getEditor('container2',{
+        	autoHeightEnabled:true
+        });
+        ue2.ready(function() {
+			ue2.setContent(""); //清空值 缓存
+		});
+    
+    $("#dlg").dialog({
+		onBeforeClose:function(){
+			//ue.destroy();
+
+			
+		}
+	});
+
+	$('#dlg').dialog('open').dialog('setTitle','New User');
+
+	$('#fm').form('clear');
+	url = 'save_user.php';
+}
+function editUser(){
+	
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+		$('#dlg').dialog('open').dialog('setTitle','Edit User');
+		
+		$('#fm').form('load',row);
+		console.log($("#uname").val());
+
+		// $("#dlg").dialog({
+		// 	onOpen:function(){
+		// 		var ue = UE.getEditor('container',{
+  //       		autoHeightEnabled:true,
+
+  //       	});
+  //       	console.log($("#uname").val());
+  //       	ue.setContent($("#uname").val());
+		// 	}
+		// }) ;
+
+		var ue = UE.getEditor('container',{
+        		autoHeightEnabled:true,
+
+        	});
+		ue.ready(function() {
+			ue.setContent($("#uname").val());
+		});
+
+
+		var ue2 = UE.getEditor('container2',{
+        		autoHeightEnabled:true,
+        	});
+		ue2.ready(function() {
+			ue2.setContent($("#pword").val());
+		});
+		
+		url = 'api/update_user.php?id='+row.ID;
+	}
+}
+function saveUser(){
+	$('#fm').form('submit',{
+		url: url,
+		onSubmit: function(){
+			console.log(UE.getEditor('container').getContent() );
+			$("#uname").val(UE.getEditor('container').getContent() );
+			return $(this).form('validate');
+		},
+		success: function(result){
+			var result = eval('('+result+')');
+			if (result.errorMsg){
+				$.messager.show({
+					title: 'Error',
+					msg: result.errorMsg
+				});
+			} else {
+				$('#dlg').dialog('close');		// close the dialog
+				$('#dg').datagrid('reload');	// reload the user data
+			}
+		}
+	});
+}
+
+function destroyUser(){
+	var row = $('#dg').datagrid('getSelected');
+	if (row){
+		$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+			if (r){
+				$.post('destroy_user.php',{id:row.ID},function(result){
+					if (result.success){
+						$('#dg').datagrid('reload');	// reload the user data
+					} else {
+						$.messager.show({	// show error message
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					}
+				},'json');
+			}
+		});
+	}
+}
+
+	</Script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title> jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/icon.css">
+	
+	<script type="text/javascript" src="/js/easyUI/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+	<!-- 纯html调用 -->
+	<!-- class="easyui-draggable" -->
+	<div id="dd" style="background: #ccc; width:500px;height: 300px" >
+	<span id="pox">内容啊</span>
+	</div>
+	<Script>
+	$(function(){
+		$.fn.draggable.defaults.cursor ='move'; //所有拖动 的cursor 都设置成move
+		$("#dd").draggable({
+			revert :true, //返回原位
+			//cursor : 'move',
+			//handle: '#pox' ,//只有选择的部分才可拖动
+			//disabled:true , //无法拖动
+			edge:50,//拖动容器的宽度  边距50 不可拖动
+			//axis : 'v', //垂直v   水平 h
+			//proxy : 'clone',
+			proxy:function(source){
+				//console.log(source);
+				var p =$('<div style="border:1px solid #ccc;width:500px; height:300px; "></div>');
+				p.html($(source).html()).appendTo('body');
+				return p;
+			},
+			deltaX : 50,
+			deltaY: 50,
+			onBeforeDrag:function(e){
+				//return false;
+				console.log(e);
+			}
+		}
+		);
+		$("#dd").draggable('disable');
+		$("#dd").draggable('enable');
+		// console.log($("#dd").draggable('options'));
+		// console.log($("#dd").draggable('proxy'));
+	});
+
+
+
+	
+
+	</Script>
+</body>
+</html>

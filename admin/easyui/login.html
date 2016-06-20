@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title> jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	
+	<script type="text/javascript" src="/js/easyUI/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div id="login">
+	<p>管理员账号：<input type="text" id="username" class="textbox"></p>
+	<p>管理员账号：<input type="password" id="password" class="textbox"></p>
+</div>
+
+<div id="btn"><a href="#" class="easyui-linkbutton">登录</a></div>
+	
+	<script>
+	$(function(){
+		$("#login").dialog({
+			title:'登陆后台',
+			width:300,
+			height:180,
+			modal:true,
+			closable: false,
+			buttons:'#btn'
+		});
+		$("#username").validatebox({
+			required:true,
+			missingMessage:'请输入管理员账号',
+			invalidMessage:'管理员账号不能为空',
+			
+		});
+		$("#password").validatebox({
+			required:true,
+			missingMessage:'请输入管理员密码',
+			invalidMessage:'密码只能是6到30位',
+			validType:'length[6,30]',
+		});
+		$("#btn a").click(function(){
+			if(!$("#username").validatebox('isValid')){
+				$("#username").focus();
+			}else if(!$("#password").validatebox('isValid')){
+				$("#password").focus();
+			}else{
+				//alert("提交中...");
+				$.ajax({
+					url:'api/checklogin.php',
+					type:'post',
+					data:{
+						username:$("#username").val(),
+						password:$("#password").val()
+					},
+					dataType: 'json',
+					beforeSend:function(){
+						$.messager.progress({
+							text:'正在登录中'
+						});
+					},
+					success:function(data){
+							$.messager.progress('close');
+							//alert("登陆成功");
+							//alert(data.err);
+							if(data.status){
+								//console.log('成功登陆');
+								location.href='index.html'; //登陆成功
+							} else {
+								//console.log(data);
+								console.log(data.err);
+								$.messager.alert('登陆失败！',data.err,'warning',function(){
+									$("#password").select();
+								})
+							}
+					}
+				})
+			}
+		});
+	})
+		
+	</script>
+	
+</body>
+</html>

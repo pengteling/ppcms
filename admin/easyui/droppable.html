@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title> jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/icon.css">
+	
+	<script type="text/javascript" src="/js/easyUI/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/js/easyUI/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+
+<div id="con" style="width:600px; height: 400px; background: #f2f2f2"></div>
+	<!-- 纯html调用 -->
+	<!-- class="easyui-draggable" -->
+	<div id="dd" style="background: #ccc; width:100px;height: 100px" >
+	<span id="pox">内容啊</span>
+	</div>
+
+	
+	<Script>
+	$(function(){
+		$("#dd").draggable();
+		$("#con").droppable({
+			accept:'#dd',
+			//disabled:true, //不允许放入 放入后没效果
+			onDragEnter:function(e,source){  //只触发一次
+				//source 表示被拖入的元素
+				$(this).css('background','blue');
+			},
+			//不停触发
+			onDragOver:function(e,source){
+				$(this).css('background','orange');
+			},
+			onDropLeave: function(e,source){
+
+			}
+			onDrop: function(e,source){
+
+			}
+		});
+		$("#con").droppable('disable');
+	});	
+
+	</Script>
+</body>
+</html>
