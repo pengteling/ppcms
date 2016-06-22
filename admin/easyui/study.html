@@ -4,8 +4,7 @@
 	<meta charset="UTF-8">
 	<title> jQuery EasyUI Demo</title>
 	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/icon.css">
-	
+	<link rel="stylesheet" type="text/css" href="/js/easyUI/themes/icon.css">	
 	<script type="text/javascript" src="/js/easyUI/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/easyUI/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="/js/easyUI/locale/easyui-lang-zh_CN.js"></script>
@@ -18,18 +17,23 @@
 </head>
 <body>
 
-<div id="box" class="easyui-tabs">
-	<div title="tab-1">tab-1</div>
-	<div title="tab-2">tab-2</div>
-	<div title="tab-3">tab-3</div>
-	
 
+<!-- class="easyui-tabs" -->
+<div id="box" >   
+	<div data-options="region:'north',title:'上方',split:true" style="height:100px">accordion-1</div>
+	<div data-options="region:'south',title:'下方',split:true">accordion-2</div>
+	<div data-options="region:'east',title:'东方',split:true">accordion-3</div>
+	<div data-options="region:'weast',title:'东方',split:true">accordion-3</div>
+	<div data-options="region:'center',title:'东方',split:true">accordion-3</div>
 </div>
 
 <script>
 $(function(){
+	$("#box").layout({
+		fit:true
+	});
 
-})
+});
 </script>
 
 </body>
