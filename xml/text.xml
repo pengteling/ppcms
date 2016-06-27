@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 声明不是必须的 -->
+<resume>
+	<prename endAge="20">朱重八</prename>
+	<name startAge="20">朱元璋</name>
+	<prejob>要饭</prejob>
+	<prejob>和尚</prejob>
+	<job>皇帝</job>
+	<!-- <age>108</age> -->
+	<sons>
+		<![CDATA[
+			<eewrer></werwer>
+		]]>
+
+	</sons>
+	<ptl>
+		<name>test</name>
+		<age>13</age>
+	</ptl>
+</resume>
+
+<!-- 
+只能有一个顶层元素 
+区分大小写
+属性一般都用双引号
+标记一定要配套
+形式良好 符合基本语法规范
+还符合DTD/schema 定义  DTD逐渐被schema取代
+-->
